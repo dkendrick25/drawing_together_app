@@ -1,0 +1,16 @@
+{
+  "name": "drawtogether_socket_project",
+  "version": "1.0.0",
+  "description": "a collabrative drawing app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "DeeAnn and Dave",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.4.8"
+  }
+}
