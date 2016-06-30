@@ -148,9 +148,9 @@ serverSocket.on('client-drawing', function(drawingData) {
     $('#m').val('');
     return false;
   });
-  serverSocket.on('Winner', function() {
+  serverSocket.on('Winner', function(winnerData) {
     console.log("there was a winner");
-    io.emit(alert('Game Over!!'));
+    io.emit(alert('Game Over! The word was ' + winnerData.secretword + ", " + winnerData.username + " won!"));
   });
 
 

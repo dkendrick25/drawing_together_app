@@ -7,20 +7,7 @@ var secretword;
 app.use(express.static('public'));
 
 
-// io.on('connection', function(clientSocket) {
-//   console.log('a user connected');
-//   clientSocket.on("server-drawing", function(drawingData) {
-//     clientSocket.broadcast.emit("client-drawing",drawingData);
-//   });
-//   clientSocket.on('server-reset', function() {
-//     // console.log("I should be resetting");
-//     io.emit('client-reset');
-//   });
-// });
 
-
-
-// All the functionality for the chat:
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
@@ -58,10 +45,14 @@ io.on('connection', function(clientSocket){
   clientSocket.on('message-to-server', function(msg){
     if (msg.message.indexOf(secretword)!== -1) {
       console.log("winner");
-      io.emit("Winner");
-    } else {
-      clientSocket.broadcast.emit('message-to-client', msg);
+      var winnerData = {
+        secretword: secretword,
+        username: clientSocket.username
+      };
+      io.emit("Winner", winnerData);
+      return;
     }
+      clientSocket.broadcast.emit('message-to-client', msg);
   });
 
   clientSocket.on('start-type', function(username) {
@@ -75,7 +66,6 @@ io.on('connection', function(clientSocket){
 
 
 });
-// This ends the functionality of the chat
 
 
 http.listen(8000, function(){
