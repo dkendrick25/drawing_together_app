@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var socket = io;
-var secertword;
+var secretword;
 app.use(express.static('public'));
 
 
@@ -13,7 +13,7 @@ io.on('connection', function(socket) {
       socket.broadcast.emit("client-drawing",drawingData);
       });
       socket.on('server-reset', function() {
-        console.log("I should be resetting");
+        // console.log("I should be resetting");
         io.emit('client-reset');
       });
     });
@@ -51,8 +51,9 @@ io.on('connection', function(socket) {
         if (msg.message.indexOf(secretword)!== -1) {
           console.log("winner");
           io.emit("Winner");
-        }
+        } else {
         clientSocket.broadcast.emit('message-to-client', msg);
+        }
       });
 
       clientSocket.on('start-type', function(username) {
