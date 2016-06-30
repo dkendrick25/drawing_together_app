@@ -30,15 +30,13 @@ var reset = document.getElementById("reset");
 reset.addEventListener('click', function (){
   // ctx.fillStyle = 'white';
   // ctx.fillRect(0, 0, 500, 500);
-  console.log("outside");
   serverSocket.emit('server-reset', function(){
-    console.log("Insideeeeee");
   });
 });
 
 
 serverSocket.on('client-reset', function(){
-  console.log("I am client reset");
+  // console.log("I am client reset");
   ctx.fillStyle = 'white';
   ctx.fillRect(0, 0, 500, 500);
 });
@@ -53,16 +51,13 @@ canvas.addEventListener('mouseup', function(event) {
 });
 
 
-serverSocket.on('client-drawing', function({
-  mousePosition: mousePosition, lastMousePosition: lastMousePosition,
-  color: color,
-  thickness: thickness}) {
+serverSocket.on('client-drawing', function(drawingData) {
     ctx.strokeStyle = color;
     ctx.lineJoin = 'round';
     ctx.lineWidth = thickness;
     ctx.beginPath();
-    ctx.moveTo(lastMousePosition.X, lastMousePosition.Y);
-    ctx.lineTo(mousePosition.X, mousePosition.Y);
+    ctx.moveTo(drawingData.lastMousePosition.X, drawingData.lastMousePosition.Y);
+    ctx.lineTo(drawingData.mousePosition.X, drawingData.mousePosition.Y);
     ctx.closePath();
     ctx.stroke();
 
@@ -95,11 +90,13 @@ serverSocket.on('client-drawing', function({
 
       console.log("lastMousePosition is " , lastMousePosition);
       console.log("This is mousePosition ", mousePosition);
-      serverSocket.emit('server-drawing', {
-        mousePosition: mousePosition, lastMousePosition: lastMousePosition,
+      var drawingData = {
+        mousePosition: mousePosition,
+        lastMousePosition: lastMousePosition,
         color: color,
-        thickness: thickness}
-      );
+        thickness: thickness
+      };
+      serverSocket.emit('server-drawing', drawingData);
       lastMousePosition = mousePosition;
     }
   });
@@ -133,8 +130,6 @@ serverSocket.on('client-drawing', function({
     var secretWord = prompt('Enter your secret word');
     console.log(secretWord);
     serverSocket.emit('clientSecretWord', secretWord);
-
-
   });
 
 

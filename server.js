@@ -9,14 +9,8 @@ app.use(express.static('public'));
 
 io.on('connection', function(socket) {
   console.log('a user connected');
-  socket.on("server-drawing", function({
-    mousePosition: mousePosition, lastMousePosition: lastMousePosition,
-    color: color,
-    thickness: thickness}){
-      socket.broadcast.emit("client-drawing",{
-        mousePosition: mousePosition, lastMousePosition: lastMousePosition,
-        color: color,
-        thickness: thickness});
+  socket.on("server-drawing", function(drawingData) {
+      socket.broadcast.emit("client-drawing",drawingData);
       });
       socket.on('server-reset', function() {
         console.log("I should be resetting");
