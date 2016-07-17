@@ -4,7 +4,7 @@ var ctx = canvas.getContext('2d');
 var mouseDown = false;
 var lastMousePosition = null;
 var color;
-var thickness;
+var thickness = 10;
 var colorChoice = document.getElementById('color-picker');
 
 colorChoice.addEventListener('change', function (event){
@@ -52,9 +52,9 @@ canvas.addEventListener('mouseup', function(event) {
 
 
 serverSocket.on('client-drawing', function(drawingData) {
-    ctx.strokeStyle = color;
+    ctx.strokeStyle = drawingData.color;
     ctx.lineJoin = 'round';
-    ctx.lineWidth = thickness;
+    ctx.lineWidth = drawingData.thickness;
     ctx.beginPath();
     ctx.moveTo(drawingData.lastMousePosition.X, drawingData.lastMousePosition.Y);
     ctx.lineTo(drawingData.mousePosition.X, drawingData.mousePosition.Y);
