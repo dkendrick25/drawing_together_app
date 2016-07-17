@@ -16,4 +16,9 @@ Want to draw a collaborative picture or maybe even play pictionary with anyone? 
 1. Add dictionary of words to be given randomly to the draw-together
 
 ##URL to Live Project
-[Check it out here](https://draw-together-madmgygqfg.now.sh/)
+[Check it out here](https://draw-together-ifyfcinztz.now.sh)
+
+##Screen Shots
+![draw-together](screenShots/draw-together.png)
+![chat-box](screenShots/chat-box.png)
+![pictionary](screenShots/pictionary.png)
